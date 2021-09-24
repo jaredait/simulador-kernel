@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Timers;
 
 namespace simulador_kernel_SO1
 {
@@ -7,8 +8,9 @@ namespace simulador_kernel_SO1
     {
         private static List<BCP> TodosProcesos = new List<BCP>();
         private static List<BCP> Preparados = new List<BCP>(); 
-        private List<BCP> Suspendidos = new List<BCP>();
+        private static List<BCP> Suspendidos = new List<BCP>();
 
+        private static System.Timers.Timer aTimer;
 
         static void Main(string[] args)
         {
@@ -25,10 +27,6 @@ namespace simulador_kernel_SO1
             Program program = new Program();
             int opcionMenu = 0;
             bool continuar = true;
-
-
-
-
 
             do
             {
@@ -55,6 +53,7 @@ namespace simulador_kernel_SO1
 
   
         }
+
 
         private void ImprimirMenu()
         {
@@ -100,7 +99,8 @@ namespace simulador_kernel_SO1
             });
         }
 
-        private void EjecutarProceso()
+        //  2
+        private void EjecutarProceso1()
         {
             BCP bcp = Preparados[0];
             Preparados.RemoveAt(0);
@@ -114,12 +114,59 @@ namespace simulador_kernel_SO1
                 Console.Write("\rTiempo restante {0:00}", a);
                 System.Threading.Thread.Sleep(1000);
                 bcp.tiempoRestante = TimeSpan.FromTicks(a * 10000000);
+
                 a--;
             }
 
             Console.WriteLine("\n\n\nPROCESO TERMINADO\n{0}\n", bcp.ToString());
 
             Console.ReadKey();
+        }
+
+        private void EjecutarProceso()
+        {
+            BCP bcp = Preparados[0];
+            bcp.tiempoRestante = TimeSpan.FromTicks(bcp.tiempoEjecucion * 10000000);
+
+            SetTimer();
+            Console.WriteLine("\nPresiona ENTER para finalizar el proceso\n");
+
+            Console.WriteLine("\nEjecutando:\n{0}\n", bcp.ToString());
+            Console.ReadLine();
+            aTimer.Stop();
+            aTimer.Dispose();
+
+            if(bcp.tiempoRestante != TimeSpan.FromTicks(0))
+            {
+                Console.WriteLine(bcp.ToString());
+                Console.WriteLine("\nPROCESO TERMINADO");
+                Console.ReadKey();
+            }
+
+        }
+        private static void SetTimer()
+        {
+            // Create a timer with a two second interval.
+            aTimer = new System.Timers.Timer(1000);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+        }
+        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            BCP bcp = Preparados[0];
+            Console.WriteLine("\r\nTiempo restante: " + bcp.tiempoRestante);
+            bcp.tiempoRestante -= TimeSpan.FromTicks(10000000);
+            if(bcp.tiempoRestante == TimeSpan.FromTicks(0))
+            {
+                aTimer.Stop();
+                aTimer.Dispose();
+
+                Console.WriteLine("________________________________________________________");
+                Console.WriteLine(bcp.ToString());
+                Console.WriteLine("\nPROCESO TERMINADO");
+            }
         }
     }
 }

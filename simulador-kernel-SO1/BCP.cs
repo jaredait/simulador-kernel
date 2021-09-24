@@ -42,14 +42,14 @@ namespace simulador_kernel_SO1
 
         public override string ToString()
         {
-            return "________________________________" +
-                "\nNombre: " + this.nombre +
-                "\nPrioridad: " + this.prioridad +
-                "\nTiempo de ejecución: " + tiempoEjecucion + 
-                "\nPID: " + pid +
-                "\nEstado: " + estado + 
-                "\nHora de creación: " + horaCreacion + 
-                "\nTiempo Restante: " + tiempoRestante;
+            return "________________________________________________________" +
+                "\nNombre:\t\t\t" + this.nombre +
+                "\nPrioridad:\t\t" + this.prioridad +
+                "\nTiempo de ejecución:\t" + tiempoEjecucion +
+                "\nPID:\t\t\t" + pid +
+                "\nEstado:\t\t\t" + estado +
+                "\nHora de creación:\t" + horaCreacion +
+                "\nTiempo Restante:\t" + tiempoRestante;
         }
     }
 }
