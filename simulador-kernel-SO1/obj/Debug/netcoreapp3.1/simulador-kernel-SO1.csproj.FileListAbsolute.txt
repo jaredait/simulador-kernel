@@ -1,0 +1,13 @@
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\bin\Debug\netcoreapp3.1\simulador-kernel-SO1.exe
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\bin\Debug\netcoreapp3.1\simulador-kernel-SO1.deps.json
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\bin\Debug\netcoreapp3.1\simulador-kernel-SO1.runtimeconfig.json
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\bin\Debug\netcoreapp3.1\simulador-kernel-SO1.runtimeconfig.dev.json
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\bin\Debug\netcoreapp3.1\simulador-kernel-SO1.dll
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\bin\Debug\netcoreapp3.1\simulador-kernel-SO1.pdb
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\obj\Debug\netcoreapp3.1\simulador-kernel-SO1.csprojAssemblyReference.cache
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\obj\Debug\netcoreapp3.1\simulador-kernel-SO1.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\obj\Debug\netcoreapp3.1\simulador-kernel-SO1.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\obj\Debug\netcoreapp3.1\simulador-kernel-SO1.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\obj\Debug\netcoreapp3.1\simulador-kernel-SO1.dll
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\obj\Debug\netcoreapp3.1\simulador-kernel-SO1.pdb
+C:\Users\ASUS\source\repos\simulador-kernel-SO1\simulador-kernel-SO1\obj\Debug\netcoreapp3.1\simulador-kernel-SO1.genruntimeconfig.cache
