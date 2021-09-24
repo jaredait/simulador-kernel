@@ -19,6 +19,7 @@ namespace simulador_kernel_SO1
             this.Nombre = nombre;
             this.Prioridad = prioridad;
             this.TiempoEjecucion = tiempoEjecucion;
+            this.tiempoRestante = TimeSpan.FromTicks(tiempoEjecucion * 10000000);
         }
 
         public string nombre { get => Nombre; set => Nombre = value; }

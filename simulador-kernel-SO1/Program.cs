@@ -44,6 +44,29 @@ namespace simulador_kernel_SO1
                         program.EjecutarProceso();
                         break;
 
+                    case 3:
+                        program.ReanudarProceso();
+                        break;
+
+                    case 4:
+                        program.MatarProceso();
+                        break;
+
+                    case 5:
+                        program.VerTodosProcesos();
+                        break;
+
+                    case 6:
+                        program.VerProcesosPreparados();
+                        break;
+
+                    case 7:
+                        program.VerProcesosSuspendidos();
+                        break;
+
+                    case 8:
+                        program.Salir();
+                        break;
                     default:
                         break;
                 }
@@ -92,7 +115,12 @@ namespace simulador_kernel_SO1
             TodosProcesos.Add(bcp);
             Preparados.Add(bcp);
 
-            // ordenar la lista Preparados segun su prioridad en orden ascendente
+            OrdenarPreparados();
+
+        }
+
+        private static void OrdenarPreparados()
+        {
             Preparados.Sort(delegate (BCP x, BCP y)
             {
                 return x.prioridad.CompareTo(y.prioridad);
@@ -100,29 +128,6 @@ namespace simulador_kernel_SO1
         }
 
         //  2
-        private void EjecutarProceso1()
-        {
-            BCP bcp = Preparados[0];
-            Preparados.RemoveAt(0);
-            bcp.tiempoRestante = TimeSpan.FromTicks(bcp.tiempoEjecucion * 10000000);
-
-            Console.WriteLine("\nEjecutando:\n{0}\n", bcp.ToString());
-
-            int a = bcp.tiempoEjecucion;
-            while (a >= 0)
-            {
-                Console.Write("\rTiempo restante {0:00}", a);
-                System.Threading.Thread.Sleep(1000);
-                bcp.tiempoRestante = TimeSpan.FromTicks(a * 10000000);
-
-                a--;
-            }
-
-            Console.WriteLine("\n\n\nPROCESO TERMINADO\n{0}\n", bcp.ToString());
-
-            Console.ReadKey();
-        }
-
         private void EjecutarProceso()
         {
             BCP bcp = Preparados[0];
@@ -139,7 +144,8 @@ namespace simulador_kernel_SO1
             if(bcp.tiempoRestante != TimeSpan.FromTicks(0))
             {
                 Console.WriteLine(bcp.ToString());
-                Console.WriteLine("\nPROCESO TERMINADO");
+                Console.WriteLine("\nPROCESO SUSPENDIDO");
+                SuspenderProceso();
                 Console.ReadKey();
             }
 
@@ -165,8 +171,156 @@ namespace simulador_kernel_SO1
 
                 Console.WriteLine("________________________________________________________");
                 Console.WriteLine(bcp.ToString());
+                EliminarProceso();
                 Console.WriteLine("\nPROCESO TERMINADO");
             }
+        }
+
+        //  3
+        private void ReanudarProceso()
+        {
+            int pidReanudar = 0;
+            BCP bcp;
+
+            Console.Clear();
+            VerProcesosSuspendidos();
+            Console.Write("\nPID: ");
+            pidReanudar = Convert.ToInt32(Console.ReadLine());
+
+            bcp = buscarPorPIDEnSuspendidos(pidReanudar);
+            if (bcp != null)
+            {
+                Suspendidos.Remove(bcp);
+                bcp.estado = "P";
+                Preparados.Add(bcp);
+                OrdenarPreparados();
+            } else
+            {
+                Console.WriteLine("Proceso no existe en Suspendido");
+            }
+        }
+
+        private static BCP buscarPorPIDEnSuspendidos(int pid)
+        {
+            foreach(BCP temp in Suspendidos)
+            {
+                if (temp.pid == pid)
+                    return temp;
+            }
+            return null;
+        }
+        private static BCP buscarPorPIDEnTodos(int pid)
+        {
+            foreach (BCP temp in TodosProcesos)
+            {
+                if (temp.pid == pid)
+                    return temp;
+            }
+            return null;
+        }
+
+        private void SuspenderProceso()
+        {
+            BCP bcp = Preparados[0];
+            Preparados.Remove(bcp);
+            bcp.estado = "S";
+            Suspendidos.Add(bcp);
+        }
+
+        //  4
+        private void MatarProceso()
+        {
+            int pidMatar = 0;
+            BCP bcp;
+
+            Console.Clear();
+            VerTodosProcesos();
+            Console.Write("\nPID: ");
+            pidMatar = Convert.ToInt32(Console.ReadLine());
+
+            bcp = buscarPorPIDEnTodos(pidMatar);
+            if (bcp != null)
+            {
+                Suspendidos.Remove(bcp);
+                Preparados.Remove(bcp);
+                TodosProcesos.Remove(bcp);
+                bcp = null;
+            } else
+            {
+                Console.WriteLine("No existe el proceso");
+            }
+
+        }
+
+
+        private static void EliminarProceso()
+        {
+            BCP bcp = Preparados[0];
+            Preparados.Remove(bcp);
+            TodosProcesos.Remove(bcp);
+            bcp = null;
+        }
+    
+        //  5
+        private void VerTodosProcesos()
+        {
+            DateTime ahorita;
+            TimeSpan edad;
+            Console.Clear();
+            Console.WriteLine("Procesos del sistema: ");
+            foreach(BCP temp in TodosProcesos)
+            {
+                Console.WriteLine(temp.ToString() + "\n");
+                ahorita = DateTime.Now;
+                edad = ahorita - temp.horaCreacion;
+                Console.WriteLine("Edad:\t\t\t{0}\n", edad);
+            }
+            Console.ReadKey();
+        }
+
+        //  6
+        private void VerProcesosPreparados()
+        {
+            DateTime ahorita;
+            TimeSpan edad;
+            Console.Clear();
+            Console.WriteLine("Procesos preparados: ");
+            foreach (BCP temp in Preparados)
+            {
+                Console.WriteLine(temp.ToString() + "\n");
+                ahorita = DateTime.Now;
+                edad = ahorita - temp.horaCreacion;
+                Console.WriteLine("Edad:\t\t\t{0}\n", edad);
+            }
+            Console.ReadKey();
+        }
+
+        //  7
+        private void VerProcesosSuspendidos()
+        {
+            DateTime ahorita;
+            TimeSpan edad;
+            Console.Clear();
+            Console.WriteLine("Procesos suspendidos: ");
+            foreach (BCP temp in Suspendidos)
+            {
+                Console.WriteLine(temp.ToString() + "\n");
+                ahorita = DateTime.Now;
+                edad = ahorita - temp.horaCreacion;
+                Console.WriteLine("Edad:\t\t\t{0}\n", edad);
+            }
+            Console.ReadKey();
+        }
+
+        //  8
+        private void Salir()
+        {
+            Preparados = null;
+            Suspendidos = null;
+            TodosProcesos = null;
+
+            Console.WriteLine("Procesos destruidos");
+            Console.ReadKey();
         }
     }
 }
