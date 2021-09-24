@@ -14,16 +14,6 @@ namespace simulador_kernel_SO1
 
         static void Main(string[] args)
         {
-            /*
-            DateTime date1 = new DateTime(2010, 1, 1, 8, 0, 0);
-            DateTime date2 = new DateTime(2010, 1, 1, 8, 0, 15);
-
-            // Calculate the interval between the two dates.
-            TimeSpan interval = date2 - date1;
-            Console.WriteLine("{0} - {1} = {2}", date2, date1, interval.TotalSeconds);
-            */
-
-
             Program program = new Program();
             int opcionMenu = 0;
             bool continuar = true;
