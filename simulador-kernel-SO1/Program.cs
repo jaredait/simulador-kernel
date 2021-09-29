@@ -121,7 +121,6 @@ namespace simulador_kernel_SO1
         private void EjecutarProceso()
         {
             BCP bcp = Preparados[0];
-            bcp.tiempoRestante = TimeSpan.FromTicks(bcp.tiempoEjecucion * 10000000);
 
             SetTimer();
             Console.WriteLine("\nPresiona ENTER para finalizar el proceso\n");
@@ -154,7 +153,7 @@ namespace simulador_kernel_SO1
             BCP bcp = Preparados[0];
             Console.WriteLine("\r\nTiempo restante: " + bcp.tiempoRestante);
             bcp.tiempoRestante -= TimeSpan.FromTicks(10000000);
-            if(bcp.tiempoRestante == TimeSpan.FromTicks(0))
+            if (bcp.tiempoRestante == TimeSpan.FromTicks(0))
             {
                 aTimer.Stop();
                 aTimer.Dispose();
